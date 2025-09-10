@@ -1,0 +1,13 @@
+<div *ngIf="!isTokenMode">
+  <h2>Register your account</h2>
+  <input [(ngModel)]="firstName" placeholder="First Name"><br>
+  <input [(ngModel)]="lastName" placeholder="Last Name"><br>
+  <input [(ngModel)]="email" placeholder="Email"><br>
+  <button (click)="sendVerification()">Verify</button>
+</div>
+
+<div *ngIf="isTokenMode">
+  <h2>Set Password</h2>
+  <input [(ngModel)]="password" type="password" placeholder="Password">
+  <button (click)="completeSignup()">Sign Up</button>
+</div>

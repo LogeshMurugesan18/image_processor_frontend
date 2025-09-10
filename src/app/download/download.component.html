@@ -1,0 +1,44 @@
+<div class="p-6 flex flex-col items-center">
+  <h1 class="text-3xl font-bold mb-4">Image Processor</h1>
+
+  <p class="text-red-600 text-xl font-semibold mb-6">
+    Download your image here !!
+  </p>
+
+  <!-- File name field -->
+  <div class="flex items-center gap-2 mb-6">
+    <span class="material-icons text-3xl">insert_drive_file</span>
+    <input 
+      type="text" 
+      [(ngModel)]="fileName" 
+      class="border px-3 py-2 rounded-lg"
+      placeholder="File name" />
+  </div>
+
+  <!-- Download Options -->
+  <div class="flex flex-col gap-3 mb-6">
+    <button (click)="downloadAs('jpg')" 
+      class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+      Download as JPG
+    </button>
+    <button (click)="downloadAs('pdf')" 
+      class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+      Download as PDF
+    </button>
+    <button (click)="downloadAs('png')" 
+      class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+      Download as PNG
+    </button>
+  </div>
+
+  <!-- Thanks message & process more -->
+  <div *ngIf="fileDownloaded" class="text-center mt-6">
+    <p class="text-green-700 text-lg font-medium mb-4">
+      ✅ Thanks for downloading!
+    </p>
+    <button (click)="processMore()"
+      class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+      Process More Images
+    </button>
+  </div>
+</div>
