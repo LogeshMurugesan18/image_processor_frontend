@@ -7,12 +7,12 @@
 
       <div class="input-group">
         <span class="icon">📧</span>
-        <input [(ngModel)]="email" name="email" type="email" placeholder="Enter Your Email here" required />
+        <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required />
       </div>
 
       <div class="input-group">
         <span class="icon">🔑</span>
-        <input [(ngModel)]="password" name="password" type="password" placeholder="Enter Your Password here" required />
+        <input [(ngModel)]="password" name="password" type="password" placeholder="Password" required />
       </div>
 
       <button (click)="login()" [disabled]="!email || !password">Login</button>

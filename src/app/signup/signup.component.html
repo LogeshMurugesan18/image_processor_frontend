@@ -6,19 +6,19 @@
 
       <div class="input-group">
         <span class="icon">👤</span>
-        <input [(ngModel)]="firstName" name="firstName" type="text" placeholder="Enter Your FirstName" required #firstNameInput="ngModel" />
+        <input [(ngModel)]="firstName" name="firstName" type="text" placeholder="FirstName" required #firstNameInput="ngModel" />
       </div>
       <div class="error-msg" *ngIf="firstNameInput.invalid && firstNameInput.touched">First name is required</div>
 
       <div class="input-group">
         <span class="icon">👥</span>
-        <input [(ngModel)]="lastName" name="lastName" type="text" placeholder="Enter Your LastName" required #lastNameInput="ngModel" />
+        <input [(ngModel)]="lastName" name="lastName" type="text" placeholder="LastName" required #lastNameInput="ngModel" />
       </div>
       <div class="error-msg" *ngIf="lastNameInput.invalid && lastNameInput.touched">Last name is required</div>
 
       <div class="input-group">
         <span class="icon">📧</span>
-        <input [(ngModel)]="email" name="email" type="email" placeholder="Enter Your Email" required email #emailInput="ngModel" />
+        <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required email #emailInput="ngModel" />
       </div>
       <div class="error-msg" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</div>
 
@@ -30,7 +30,7 @@
 
       <div class="input-group">
         <span class="icon">🔒</span>
-        <input [(ngModel)]="password" name="password" type="password" placeholder="Enter Your Password" required minlength="5" #passwordInput="ngModel" />
+        <input [(ngModel)]="password" name="password" type="password" placeholder="Password" required minlength="5" #passwordInput="ngModel" />
       </div>
       <div class="error-msg" *ngIf="passwordInput.invalid && passwordInput.touched">Password must be at least 5 characters</div>
 
