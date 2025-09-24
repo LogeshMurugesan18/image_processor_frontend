@@ -48,8 +48,10 @@ color: rgb(255, 255, 255);
   cursor: pointer;
 }
 
-.auth-btn.logout {
-  background-color: #dc3545;
+.fa-solid.fa-right-from-bracket {
+  color: #FFFFFF; /* White color */
+  font-size: 1.5rem; /* Increased size (adjust as needed, e.g., 1.5rem, 24px, etc.) */
+  cursor: pointer; /* Pointer cursor on hover */
 }
 
 body {
@@ -61,7 +63,9 @@ body {
   margin: 0;
   padding: 0;
 }
-
+.fa-solid fa-right-from-bracket::hover{
+color: red;
+}
 
 
 /* landing.component.scss */
@@ -160,7 +164,7 @@ body {
       button {
         width: 100%;
         padding: 0.7rem;
-        background-color: #4a90e2;
+        background-color: #5159a3;
         border: none;
         border-radius: 5px;
         color: white;
@@ -169,7 +173,7 @@ body {
         transition: background 0.3s;
 
         &:hover:not(:disabled) {
-          background-color: #27ae60;
+          background-color: #3741a0;
         }
 
         &:disabled {
@@ -466,7 +470,9 @@ body {
 .fa-solid.fa-xmark {
   cursor: pointer;
 }
-
+.fa-solid.fa-xmark:hover {
+  color: #ff4d4d; /* hover color */
+}
 .image-box-header h3 {
   margin: 0;
   font-size: 20px;
@@ -508,6 +514,7 @@ body {
   object-fit: contain;
   border-radius: 4px;
 }
+
 
 .info-table {
   width: 100%;
@@ -562,23 +569,36 @@ body {
 
 .action-buttons {
   display: flex;
-  gap: 10px;
+  justify-content: space-between; /* Save stays left, icon goes right */
+  align-items: center;
   margin-top: 10px;
 }
 
 .btn {
-  padding: 6px 15px;
-  cursor: pointer;
-  background-color: #5159a3; 
-  border-radius: 6px;
-  color: #ffffff;
+  padding: 6px 14px;
+  background-color: #5159a3;
+  color: #fff;
   border: none;
-  transition: background-color 0.3s ease;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background-color: #29359e;
+  }
 }
 
-.btn:hover {
-  background-color: #2f3887; /* hover effect */
+.download-icon {
+  font-size: 22px;
+  color: #5159a3;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #3742a7;
+  }
 }
+
 
 .divider {
   width: 1px;

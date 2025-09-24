@@ -37,17 +37,19 @@
     <tr><td></td></tr>
     <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
     <tr>
-      <td><strong>File Name:</strong></td>
+      <td><strong>Image Name:</strong></td>
       <td>{{ uploadedFileName }}</td>
+    </tr>
+    <tr>
+      <td><strong>Dimensions:</strong></td>
+      <td>{{ uploadedImageWidth }} x {{ uploadedImageHeight }} px</td>
     </tr>
     <tr>
       <td><strong>Image Size:</strong></td>
       <td>{{ uploadedFileSize }}</td>
     </tr>
-
   </table>
 </div>
-
       </div>
       <!-- Rotate / Upscale / Crop buttons -->
       <div class="action-buttons">
@@ -90,17 +92,17 @@
     <!-- Add more rows if needed -->
   </table>
 </div>
-
         <div class="image-area">
           <div class="image-placeholder">
             <img *ngIf="croppedImage" [src]="croppedImage" alt="Processed Image" />
           </div>
         </div>
       </div>
-      <div class="action-buttons">
-        <button class="btn" (click)="downloadImage()">Save</button>
-        <i class="fa-solid fa-download"></i>
-      </div>
+<div class="action-buttons">
+  <button class="btn" (click)="downloadImage()">Save</button>
+  <i class="fa-solid fa-download download-icon" (click)="downloadImage()"></i>
+</div>
+
     </section>
   </main>
 
@@ -139,16 +141,16 @@
       </div>
     </div>
   </div>
-</div>
 
-<!-- Close Confirmation Popup -->
-<div class="popup-overlay" *ngIf="showClosePopup">
-  <div class="popup">
-    <h3>Are you sure?</h3>
-    <p>All uploaded and processed data will be lost.</p>
-    <div class="popup-actions">
-      <button class="btn danger" (click)="confirmClose()">OK</button>
-      <button class="btn" (click)="cancelClose()">Cancel</button>
+  <!-- Close Confirmation Popup -->
+  <div class="popup-overlay" *ngIf="showClosePopup">
+    <div class="popup">
+      <h3>Are you sure?</h3>
+      <p>All uploaded and processed data will be lost.</p>
+      <div class="popup-actions">
+        <button class="btn danger" (click)="confirmClose()">OK</button>
+        <button class="btn" (click)="cancelClose()">Cancel</button>
+      </div>
     </div>
   </div>
 </div>

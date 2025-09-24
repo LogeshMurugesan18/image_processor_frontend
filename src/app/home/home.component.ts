@@ -20,6 +20,10 @@ export class HomeComponent {
   previewUrl: string | ArrayBuffer | null = null;
   showControls = false;
 
+  // Store dimensions after upload
+  uploadedWidth: number = 0;
+  uploadedHeight: number = 0;
+
   constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {}
 
   ngOnInit(): void {
@@ -46,6 +50,14 @@ export class HomeComponent {
       const reader = new FileReader();
       reader.onload = () => {
         this.previewUrl = reader.result;
+
+        // Get dimensions using Image object
+        const img = new Image();
+        img.onload = () => {
+          this.uploadedWidth = img.width;
+          this.uploadedHeight = img.height;
+        };
+        img.src = reader.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -66,12 +78,14 @@ export class HomeComponent {
           this.toastr.success('File uploaded successfully!');
           this.showControls = true;
 
-          // Navigate to process page and pass previewUrl, file name, and size
+          // Pass dimensions as well
           this.router.navigate(['/process'], {
             state: { 
               previewUrl: this.previewUrl,
               uploadedFileName: this.selectedFile?.name,
-              uploadedFileSize: this.formatBytes(this.selectedFile!.size)
+              uploadedFileSize: this.formatBytes(this.selectedFile!.size),
+              uploadedImageWidth: this.uploadedWidth,
+              uploadedImageHeight: this.uploadedHeight
             }
           });
 

@@ -47,12 +47,15 @@ export class ProcessComponent {
 
   ngOnInit() {
     const navState = history.state;
+
     if (navState.previewUrl) {
       this.previewUrl = navState.previewUrl;
       this.updateUploadedSize(this.previewUrl ||''); 
     }
     if (navState.uploadedFileName) this.uploadedFileName = navState.uploadedFileName;
     if (navState.uploadedFileSize) this.uploadedFileSize = navState.uploadedFileSize;
+    if (navState.uploadedImageWidth) this.uploadedImageWidth = +navState.uploadedImageWidth;
+    if (navState.uploadedImageHeight) this.uploadedImageHeight = +navState.uploadedImageHeight;
   }
 
   // Crop flags
