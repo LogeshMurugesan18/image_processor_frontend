@@ -1,42 +1,51 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   email = '';
   password = '';
   // token: string | null = null;
   // userId: number | null = null;
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    // private http: HttpClient,
+     private router: Router,
+     private toastr: ToastrService,
+     private auth:AuthService) {}
 
-  login() {
-    this.http.post('http://localhost:3000/api/auth/login', {
-      email: this.email,
-      password: this.password
-    },
-  {withCredentials:true}).subscribe({
-      next: (res) => {
-  //       const token = res.token; 
-  //        if (token) {
-  //   const payload = JSON.parse(atob(token.split('.')[1])); 
-  //   this.userId = payload.id;  
-  //   localStorage.setItem('token', token);
+  // login() {
+  //   this.http.post('http://localhost:3000/api/auth/login', {
+  //     email: this.email,
+  //     password: this.password
+  //   },
+  // {withCredentials:true}).subscribe({
+  //     next: (res:any) => {
+  //      this.toastr.success('Login successful!');        
+  //       this.router.navigate(['/home']);
+  //     },
+  //     error: err => this.toastr.error(err.error?.error || 'Login failed')
+  //   });
+
   // }
-        alert('Login successful!');
-        
+  
+  login() {
+    this.auth.login(this.email, this.password).subscribe({
+      next: () => {
+        this.toastr.success('Login successful!');
         this.router.navigate(['/home']);
       },
-      error: err => alert(err.error?.error || 'Login failed')
+      error: err => this.toastr.error(err.error?.error || 'Login failed')
     });
-
   }
 }

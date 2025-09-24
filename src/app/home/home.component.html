@@ -1,27 +1,24 @@
-<div class="p-6 flex flex-col items-center"> 
-  <h2 class="text-2xl font-bold mb-4">Upload Your Image</h2>
+<app-header></app-header>
+<div class="home-container">
 
-  <!-- File input -->
-  <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+  <!-- Previously processed images -->
+  <section class="gallery">
+    <!-- <div class="image-card" *ngFor="let img of processedImages">
+      <img [src]="img.url" alt="Processed Image">
+    </div> -->
+    <div class="image-card">Previously Processed Images</div>
+  </section>
 
-  <!-- Preview Section -->
-  <div *ngIf="previewUrl" class="mt-6 flex flex-col items-center gap-4">
-    <img [src]="previewUrl" alt="Preview" class="max-w-md rounded-lg shadow-lg" />
-
-    <div class="flex gap-4">
-      <!-- Upload button -->
-      <button 
-        (click)="uploadFile()"
-        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-        Upload
-      </button>
-
-      <!-- Delete button -->
-      <button 
-        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
-        (click)="clearSelection()">
-        Delete
-      </button>
+  <!-- Upload section -->
+  <section class="upload-section">
+    <p class="upload-label">Upload Here</p>
+    <div class="upload-box">
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+      <button class="btn" (click)="clearSelection()">Clear</button>
+      <button class="btn" (click)="uploadFile()">Proceed</button>
     </div>
-  </div>
+  </section>
 </div>
+
+
+

@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
   imports: [CommonModule, FormsModule,],
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
   firstName = '';
@@ -21,7 +22,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -37,8 +39,8 @@ export class SignupComponent implements OnInit {
       lastName: this.lastName,
       email: this.email
     }).subscribe({
-      next: () => alert('Verification email sent!'),
-      error: err => alert(err.error?.error || 'Error sending verification email')
+      next: () => this.toastr.success('Verification email sent!'),
+      error: err => this.toastr.error(err.error?.error || 'Error sending verification email')
     });
   }
 
@@ -48,10 +50,10 @@ export class SignupComponent implements OnInit {
       password: this.password
     }).subscribe({
       next: () => {
-        alert('Signup completed!');
+        this.toastr.success('Signup completed!');
         this.router.navigate(['/']);
       },
-      error: err => alert(err.error?.error || 'Error completing signup')
+      error: err => this.toastr.error(err.error?.error || 'Error completing signup')
     });
   }
 }

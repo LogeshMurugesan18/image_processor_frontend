@@ -1,4 +1,33 @@
-<h2>Login</h2>
-<input [(ngModel)]="email" placeholder="Email" type="email">
-<input [(ngModel)]="password" placeholder="Password" type="password">
-<button (click)="login()">Login</button>
+<div class="auth-page login-page">
+  <!-- Left side: Form -->
+  <div class="auth-left login-left">
+    <div class="auth-card login-card">
+      <h2>Login to your account</h2>
+      <p class="subtitle">Enter Your Email and Password</p>
+
+      <div class="input-group">
+        <span class="icon">📧</span>
+        <input [(ngModel)]="email" name="email" type="email" placeholder="Enter Your Email here" required />
+      </div>
+
+      <div class="input-group">
+        <span class="icon">🔑</span>
+        <input [(ngModel)]="password" name="password" type="password" placeholder="Enter Your Password here" required />
+      </div>
+
+      <button (click)="login()" [disabled]="!email || !password">Login</button>
+
+      <p class="signup-link">
+        Don’t have an account? <a routerLink="/signup">Sign up</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Right side: Info -->
+  <div class="auth-right login-right">
+    <img src="/images/pixlr-e-photo-editor.jpg" alt="Workspace" />
+    <h3>Log in to your workspace</h3>
+    <p>Enter your email and password to access your Image Processor account.</p>
+    <p class="highlight">You are one step closer to boosting your image.</p>
+  </div>
+</div>

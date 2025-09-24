@@ -1,48 +1,112 @@
-<div class="p-6 flex flex-col items-center">
-  <!-- Header Row -->
-  <div class="w-full flex justify-between items-center mb-4">
-    <h1 class="text-3xl font-bold">Image Processor</h1>
-    <button class="bg-red-500 text-white px-4 py-2 rounded-lg">Logout</button>
-  </div>
+<div class="processor-container">
+  <app-header></app-header>
 
-  <!-- Main Content -->
-  <div class="flex w-full justify-center gap-10">
-    <!-- Rotate Buttons -->
-    <div class="flex flex-col gap-4">
-      <button (click)="rotateRight()" class="bg-green-500 text-white px-4 py-2 rounded-lg">
-        Rotate Right
-      </button>
-      <button (click)="rotateLeft()" class="bg-pink-500 text-white px-4 py-2 rounded-lg">
-        Rotate Left
-      </button>
-    </div>
+  <!-- Main section -->
+  <main class="main-content">
+    <!-- Original image -->
+    <section class="image-box">
+      <div class="image-box-header">
+        <h3>Uploaded Image</h3>
+      </div>
+      <div class="image-content">
+        <div class="image-area">
+          <div class="image-placeholder">
+            <img *ngIf="previewUrl && !isCropping" [src]="previewUrl" alt="Uploaded Image">
+            <image-cropper
+              *ngIf="isCropping"
+              [imageBase64]="previewUrl"
+              [maintainAspectRatio]="false"
+              [resizeToWidth]="1000"
+              [resizeToHeight]="1000"
+              format="png"
+              (imageCropped)="onImageCropped($event)">
+            </image-cropper>
+          </div>
+          <!-- Reserve space for buttons always, only show when cropping -->
+          <div class="crop-buttons" [ngClass]="{ 'hidden': !isCropping }">
+            <button class="crop-btn" (click)="applyCrop()">Done</button>
+            <button class="crop-btn" (click)="cancelCrop()">Cancel</button>
+          </div>
+        </div>
+        <div class="file-info" *ngIf="uploadedFileName">
+          <p><strong>Uploaded File Name:</strong> {{ uploadedFileName }}</p>
+          <p><strong>Uploaded Image Size:</strong> {{ uploadedFileSize }}</p>
+          <!-- <p><strong>Uploaded Image Height:</strong> {{ uploadedImageHeight }}</p>
+          <p><strong>Uploaded Image Width:</strong> {{ uploadedImageWidth }}</p>
+          <p><strong>Uploaded File Dimension:</strong> {{ uploadedFileDimension }}</p> -->
+        </div>
+      </div>
+      <!-- Rotate / Upscale / Crop buttons -->
+      <div class="action-buttons">
+        <button class="btn" (click)="openRotatePopup()">Rotate</button>
+        <button class="btn" (click)="openUpscalePopup()">Upscale</button>
+        <button class="btn" (click)="startCrop()">Crop</button>
+      </div>
+    </section>
 
-    <!-- Image Preview -->
-    <div class="flex items-center justify-center border p-4 rounded-lg shadow-md">
-      <img 
-        [src]="previewUrl || 'assets/placeholder.png'" 
-        alt="Preview" 
-        class="max-w-md max-h-[400px] rounded-lg transition-transform duration-300"
-        [style.transform]="'rotate(' + rotation + 'deg)'"
-      />
-    </div>
+    <!-- Divider -->
+    <div class="divider"></div>
 
-    <!-- Resolution Options -->
-    <div class="flex flex-col border rounded-lg p-4 shadow-md">
-      <div *ngFor="let res of resolutions" 
-           (click)="selectResolution(res)"
-           [class.bg-blue-200]="res === selectedResolution"
-           class="px-4 py-2 cursor-pointer hover:bg-blue-100">
-        {{ res }}
+    <!-- Processed image -->
+    <section class="image-box">
+      <div class="image-box-header">
+        <h3>Processed Image</h3>
+        <i class="fa-solid fa-xmark" (click)="onClose()"></i>
+      </div>
+      <div class="image-content">
+        <div class="file-info" *ngIf="processedFileSize">
+          <p><strong>Processed Image Name:</strong> {{ processedFileName }}</p>
+          <p><strong>Processed Image Size:</strong> {{ processedFileSize }}</p>
+          <!-- <p><strong>Processed Image Height:</strong> {{ processedImageHeight }}</p>
+          <p><strong>Processed Image Width:</strong> {{ processedImageWidth }}</p>
+          <p><strong>Processed Image Dimension:</strong> {{ processedImageDimension }}</p> -->
+        </div>
+        <div class="image-area">
+          <div class="image-placeholder">
+            <img *ngIf="croppedImage" [src]="croppedImage" alt="Processed Image" />
+          </div>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <button class="btn" (click)="downloadImage()">Save</button>
+        <i class="fa-solid fa-download"></i>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rotate Popup -->
+  <div class="popup-overlay" *ngIf="showRotatePopup">
+    <div class="popup">
+      <h3>Select Rotate Option</h3>
+      <select [(ngModel)]="rotateOption">
+        <option value="90">Rotate 90°</option>
+        <option value="-90">Rotate -90°</option>
+        <option value="180">Rotate 180°</option>
+        <option value="-180">Rotate -180°</option>
+        <option value="flipH">Flip Horizontal</option>
+        <option value="flipV">Flip Vertical</option>
+      </select>
+      <div class="popup-actions">
+        <button class="btn" (click)="applyRotate()">Apply</button>
+        <button class="btn" (click)="closeRotatePopup()">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- Process Button -->
-  <button 
-    (click)="processImage()"
-    class="mt-6 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
-    [routerLink]="['/download']">
-    Process
-  </button>
+  <!-- Upscale Popup -->
+  <div class="popup-overlay" *ngIf="showUpscalePopup">
+    <div class="popup">
+      <h3>Select Upscale Factor</h3>
+      <select [(ngModel)]="upscaleOption">
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+        <option value="3">3x</option>
+        <option value="4">4x</option>
+      </select>
+      <div class="popup-actions">
+        <button class="btn" (click)="applyUpscale()">Apply</button>
+        <button class="btn" (click)="closeUpscalePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,131 @@
+// .login-container {
+//   display: flex;
+//   height: 100vh;
+//   background-color: #fff;
+// }
+
+// /* Left: Login box */
+// .login-box {
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   background: #cbe2f9; /* light blue */
+//   padding: 30px;
+//   border-right: 2px solid #ddd;
+// }
+
+// .login-box h2 {
+//   font-size: 1.8rem;
+//   margin-bottom: 10px;
+//   text-align: center;
+// }
+
+// .subtitle {
+//   color: #d1a900;
+//   margin-bottom: 20px;
+//   font-weight: bold;
+// }
+
+// .input-group {
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 15px;
+//   width: 100%;
+//   max-width: 350px;
+// }
+
+// .input-group .icon {
+//   margin-right: 10px;
+//   font-size: 1.2rem;
+// }
+
+// .input-group input {
+//   flex: 1;
+//   padding: 10px;
+//   border: 1px solid #444;
+//   border-radius: 5px;
+//   font-size: 1rem;
+// }
+
+// .error {
+//   color: red;
+//   font-size: 0.85rem;
+//   margin-bottom: 10px;
+// }
+
+// button {
+//   padding: 10px 20px;
+//   background-color: #90ee90;
+//   border: 1px solid #444;
+//   border-radius: 5px;
+//   font-size: 1rem;
+//   cursor: pointer;
+//   margin-top: 10px;
+// }
+
+// button:disabled {
+//   background-color: #ccc;
+//   cursor: not-allowed;
+// }
+
+// .signup-link {
+//   margin-top: 15px;
+// }
+
+// .signup-link a {
+//   color: #007bff;
+//   text-decoration: none;
+//   cursor: pointer;
+// }
+
+// /* Right: Info section */
+// .info-box {
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 30px;
+//   background: #fff;
+// }
+
+// .info-box img {
+//   max-width: 250px;
+//   margin-bottom: 15px;
+// }
+
+// .info-box h3 {
+//   color: red;
+//   margin-bottom: 10px;
+// }
+
+// .info-box p {
+//   text-align: center;
+//   margin-bottom: 8px;
+// }
+
+// .info-box .highlight {
+//   color: #007bff;
+//   font-weight: bold;
+// }
+
+// /* 📱 Responsive */
+// @media (max-width: 768px) {
+//   .login-container {
+//     flex-direction: column;
+//   }
+
+//   .login-box,
+//   .info-box {
+//     flex: none;
+//     width: 100%;
+//     border-right: none;
+//     border-bottom: 2px solid #ddd;
+//   }
+
+//   .info-box img {
+//     max-width: 200px;
+//   }
+// }

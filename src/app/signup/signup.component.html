@@ -1,13 +1,48 @@
-<div *ngIf="!isTokenMode">
-  <h2>Register your account</h2>
-  <input [(ngModel)]="firstName" placeholder="First Name"><br>
-  <input [(ngModel)]="lastName" placeholder="Last Name"><br>
-  <input [(ngModel)]="email" placeholder="Email"><br>
-  <button (click)="sendVerification()">Verify</button>
-</div>
+<div class="auth-page signup-page">
+  <!-- Left side: Form -->
+  <div class="auth-left signup-left">
+    <div class="auth-card signup-card" *ngIf="!isTokenMode">
+      <h2>Register Your account </h2>
 
-<div *ngIf="isTokenMode">
-  <h2>Set Password</h2>
-  <input [(ngModel)]="password" type="password" placeholder="Password">
-  <button (click)="completeSignup()">Sign Up</button>
+      <div class="input-group">
+        <span class="icon">👤</span>
+        <input [(ngModel)]="firstName" name="firstName" type="text" placeholder="Enter Your FirstName" required #firstNameInput="ngModel" />
+      </div>
+      <div class="error-msg" *ngIf="firstNameInput.invalid && firstNameInput.touched">First name is required</div>
+
+      <div class="input-group">
+        <span class="icon">👥</span>
+        <input [(ngModel)]="lastName" name="lastName" type="text" placeholder="Enter Your LastName" required #lastNameInput="ngModel" />
+      </div>
+      <div class="error-msg" *ngIf="lastNameInput.invalid && lastNameInput.touched">Last name is required</div>
+
+      <div class="input-group">
+        <span class="icon">📧</span>
+        <input [(ngModel)]="email" name="email" type="email" placeholder="Enter Your Email" required email #emailInput="ngModel" />
+      </div>
+      <div class="error-msg" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</div>
+
+      <button (click)="sendVerification()" [disabled]="firstNameInput.invalid || lastNameInput.invalid || emailInput.invalid">Verify Email</button>
+    </div>
+
+    <div class="auth-card signup-card" *ngIf="isTokenMode">
+      <h2>Set Password</h2>
+
+      <div class="input-group">
+        <span class="icon">🔒</span>
+        <input [(ngModel)]="password" name="password" type="password" placeholder="Enter Your Password" required minlength="5" #passwordInput="ngModel" />
+      </div>
+      <div class="error-msg" *ngIf="passwordInput.invalid && passwordInput.touched">Password must be at least 5 characters</div>
+
+      <button (click)="completeSignup()" [disabled]="passwordInput.invalid">Sign Up</button>
+    </div>
+  </div>
+
+  <!-- Right side: Info -->
+  <div class="auth-right signup-right">
+    <img src="/images/pixlr-e-photo-editor.jpg" alt="Workspace" />
+    <h3>Register to access your workspace</h3>
+    <p>Enter your email and password to access your Image Processor account.</p>
+    <p class="highlight">You are one step closer to boosting your image.</p>
+  </div>
 </div>

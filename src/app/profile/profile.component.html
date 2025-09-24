@@ -1,0 +1,21 @@
+<div class="profile-container">
+  <div class="images-section">
+    <h2>My Processed Images</h2>
+    <div class="image-grid">
+      <div class="image-card" *ngFor="let img of processedImages">
+        <img [src]="img" alt="Processed Image" />
+      </div>
+    </div>
+  </div>
+
+  <div class="edit-section">
+    <h2>Edit Profile</h2>
+    <form>
+      <input type="text" placeholder="Your First Name" [(ngModel)]="firstName" name="firstName" />
+      <input type="text" placeholder="Your Last Name" [(ngModel)]="lastName" name="lastName" />
+
+      <button type="button" class="reset-btn" (click)="resetPassword()">Reset Password</button>
+      <button type="submit" class="edit-btn" (click)="updateProfile()">Edit</button>
+    </form>
+  </div>
+</div>
