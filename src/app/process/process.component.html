@@ -29,12 +29,25 @@
           </div>
         </div>
         <div class="file-info" *ngIf="uploadedFileName">
-          <p><strong>Uploaded File Name:</strong> {{ uploadedFileName }}</p>
-          <p><strong>Uploaded Image Size:</strong> {{ uploadedFileSize }}</p>
-          <!-- <p><strong>Uploaded Image Height:</strong> {{ uploadedImageHeight }}</p>
-          <p><strong>Uploaded Image Width:</strong> {{ uploadedImageWidth }}</p>
-          <p><strong>Uploaded File Dimension:</strong> {{ uploadedFileDimension }}</p> -->
-        </div>
+  <table class="info-table">
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+    <tr>
+      <td><strong>File Name:</strong></td>
+      <td>{{ uploadedFileName }}</td>
+    </tr>
+    <tr>
+      <td><strong>Image Size:</strong></td>
+      <td>{{ uploadedFileSize }}</td>
+    </tr>
+
+  </table>
+</div>
+
       </div>
       <!-- Rotate / Upscale / Crop buttons -->
       <div class="action-buttons">
@@ -55,12 +68,29 @@
       </div>
       <div class="image-content">
         <div class="file-info" *ngIf="processedFileSize">
-          <p><strong>Processed Image Name:</strong> {{ processedFileName }}</p>
-          <p><strong>Processed Image Size:</strong> {{ processedFileSize }}</p>
-          <!-- <p><strong>Processed Image Height:</strong> {{ processedImageHeight }}</p>
-          <p><strong>Processed Image Width:</strong> {{ processedImageWidth }}</p>
-          <p><strong>Processed Image Dimension:</strong> {{ processedImageDimension }}</p> -->
-        </div>
+  <table class="info-table">
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+    <tr>
+      <td><strong>Image Name:</strong></td>
+      <td>{{ processedFileName }}</td>
+    </tr>
+    <tr>
+      <td><strong>Dimensions:</strong></td>
+      <td>{{ processedImageWidth }} x {{ processedImageHeight }} px</td>
+    </tr>
+    <tr>
+      <td><strong>Image Size:</strong></td>
+      <td>{{ processedFileSize }}</td>
+    </tr>
+    <!-- Add more rows if needed -->
+  </table>
+</div>
+
         <div class="image-area">
           <div class="image-placeholder">
             <img *ngIf="croppedImage" [src]="croppedImage" alt="Processed Image" />
@@ -107,6 +137,18 @@
         <button class="btn" (click)="applyUpscale()">Apply</button>
         <button class="btn" (click)="closeUpscalePopup()">Cancel</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Close Confirmation Popup -->
+<div class="popup-overlay" *ngIf="showClosePopup">
+  <div class="popup">
+    <h3>Are you sure?</h3>
+    <p>All uploaded and processed data will be lost.</p>
+    <div class="popup-actions">
+      <button class="btn danger" (click)="confirmClose()">OK</button>
+      <button class="btn" (click)="cancelClose()">Cancel</button>
     </div>
   </div>
 </div>

@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-process',
   imports: [CommonModule, FormsModule, HeaderComponent, ImageCropperComponent],
   templateUrl: './process.component.html',
-  styleUrls: ['./process.component.scss'] 
+  styleUrls: ['./process.component.scss']
 })
 export class ProcessComponent {
   previewUrl: string | undefined = undefined;
@@ -21,25 +21,38 @@ export class ProcessComponent {
   // File info
   uploadedFileName: string = '';
   uploadedFileSize: string = '';
-  processedFileSize: string = '';
+  uploadedImageWidth: number = 0;
+  uploadedImageHeight: number = 0;
+
   processedFileName: string = '';
+  processedFileSize: string = '';
+  processedImageWidth: number = 0;
+  processedImageHeight: number = 0;
+
   // Popup flags
   showRotatePopup = false;
   showUpscalePopup = false;
+  showClosePopup = false;
 
   // Selected options
   rotateOption: string = '90';
   upscaleOption: string = '2';
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer, private router: Router, private toastr:ToastrService) {}
+  constructor(
+    private http: HttpClient,
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     const navState = history.state;
     if (navState.previewUrl) {
       this.previewUrl = navState.previewUrl;
+      this.updateUploadedSize(this.previewUrl ||''); 
     }
     if (navState.uploadedFileName) this.uploadedFileName = navState.uploadedFileName;
-  if (navState.uploadedFileSize) this.uploadedFileSize = navState.uploadedFileSize;
+    if (navState.uploadedFileSize) this.uploadedFileSize = navState.uploadedFileSize;
   }
 
   // Crop flags
@@ -57,8 +70,9 @@ export class ProcessComponent {
       reader.onload = (e: any) => {
         this.previewUrl = e.target.result;
         this.croppedImage = null;
+        this.processedFileName = '';
         this.processedFileSize = '';
-        this.processedFileName='';
+        this.updateUploadedSize(this.previewUrl!); // update width/height for uploaded
       };
       reader.readAsDataURL(file);
     }
@@ -80,38 +94,21 @@ export class ProcessComponent {
   closeRotatePopup() { this.showRotatePopup = false; }
   closeUpscalePopup() { this.showUpscalePopup = false; }
 
-onClose(force = false) {
-  if (force) {
-    this.toastr.clear(); // remove any active toasts
-    this.router.navigate(['/home']); // navigate correctly
-    return;
+  // Open close confirmation popup
+  onClose() {
+    this.showClosePopup = true;
   }
 
-  const toastRef = this.toastr.warning(
-    'The currently selected/processed data will be lost.<br><br>' +
-    '<button id="confirmCloseBtn" style="background:#d9534f;color:#fff;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">Close Anyway</button>',
-    'Warning!',
-    {
-      enableHtml: true,
-      timeOut: 0,           // keep it until user decides
-      closeButton: true,
-      tapToDismiss: false
-    }
-  );
+  // Handle OK
+  confirmClose() {
+    this.showClosePopup = false;
+    this.router.navigate(['/home']);
+  }
 
-  // Bind the event manually once toastr is rendered
-  setTimeout(() => {
-    const btn = document.getElementById('confirmCloseBtn');
-    if (btn) {
-      btn.addEventListener('click', () => {
-        this.toastr.clear();
-        this.router.navigate(['/home']);
-      });
-    }
-  }, 200);
-}
-
-
+  // Handle Cancel
+  cancelClose() {
+    this.showClosePopup = false;
+  }
 
   private fetchImageAsFile(src: string, fileName: string): Promise<File> {
     return fetch(src)
@@ -136,6 +133,7 @@ onClose(force = false) {
       ).subscribe({
         next: (res) => {
           this.croppedImage = res.image;
+          this.processedFileName = 'rotated-' + file.name;
           this.updateProcessedSize(res.image);
           this.closeRotatePopup();
         },
@@ -160,6 +158,7 @@ onClose(force = false) {
       ).subscribe({
         next: (res) => {
           this.croppedImage = res.image;
+          this.processedFileName = 'upscaled-' + file.name;
           this.updateProcessedSize(res.image);
           this.closeUpscalePopup();
         },
@@ -192,6 +191,7 @@ onClose(force = false) {
   applyCrop() {
     if (this.tempCropped) {
       this.croppedImage = this.tempCropped;
+      this.processedFileName = 'cropped-' + this.uploadedFileName;
       this.updateProcessedSize(this.croppedImage);
     }
     this.isCropping = false;
@@ -201,14 +201,33 @@ onClose(force = false) {
     if (!this.croppedImage) return;
     const link = document.createElement('a');
     link.href = this.croppedImage;
-    link.download = 'processed-image.png';
+    link.download = this.processedFileName || 'processed-image.png';
     link.click();
   }
 
-  // --- Helper to update processed size ---
+  // --- Helper to update uploaded size & dimensions ---
+  private updateUploadedSize(dataUrl: string) {
+    const img = new Image();
+    img.onload = () => {
+      this.uploadedImageWidth = img.width;
+      this.uploadedImageHeight = img.height;
+    };
+    img.src = dataUrl;
+  }
+
+  // --- Helper to update processed size & dimensions ---
   private updateProcessedSize(dataUrl: string) {
     fetch(dataUrl)
       .then(res => res.blob())
-      .then(blob => this.processedFileSize = this.formatBytes(blob.size));
+      .then(blob => {
+        this.processedFileSize = this.formatBytes(blob.size);
+
+        const img = new Image();
+        img.onload = () => {
+          this.processedImageWidth = img.width;
+          this.processedImageHeight = img.height;
+        };
+        img.src = dataUrl;
+      });
   }
 }

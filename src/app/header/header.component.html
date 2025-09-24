@@ -1,24 +1,25 @@
 <header class="header">
   <div class="left">
     <div class="logo">
-      <img src="/images/logo.png" alt="logo" routerLink="/">
+      <!-- <img src="/images/logo.png" alt="logo" routerLink="/"> -->
     </div>
     <h1 class="title">Image Processor</h1>
   </div>
 
   <!-- Show login if not logged in -->
-  <button 
+  <a 
     *ngIf="!isLoggedIn" 
     class="auth-btn" 
     (click)="navigateToLogin()">
     Login
-  </button>
+  </a>
 
   <!-- Show logout if logged in -->
-  <button 
+  <!-- <button 
     *ngIf="isLoggedIn" 
     class="auth-btn logout" 
     (click)="logout()">
     Logout
-  </button>
+  </button> -->
+  <i class="fa-solid fa-right-from-bracket" *ngIf="isLoggedIn" (click)="logout()"></i>
 </header>
