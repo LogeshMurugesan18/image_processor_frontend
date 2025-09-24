@@ -7,18 +7,23 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;  // left group on left, buttons on right
+  justify-content: space-between;
   padding: 0 20px;
   height: 60px;
-  background-color: #b7dbee;
-  border-bottom: 1px solid #ddd;
+  background-color: #5159a3,;
+  // border-bottom: 1px solid #ddd;
   box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  position: relative;
+  left: 0;
+  top: 0;
 }
 
 .left {
   display: flex;
   align-items: center;
-  gap: 10px;  // space between logo and title
+  gap: 10px;
 }
 
 .logo img {
@@ -31,23 +36,31 @@
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
+  color: rgb(255, 255, 255);
 }
 
 .auth-btn {
-  background-color: #2d629a;
-  color: white;
+color: rgb(255, 255, 255);
+  font-size: 1rem;
+  font-weight: 400;
   border: none;
   padding: 6px 12px;
-  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
 }
 
 .auth-btn.logout {
   background-color: #dc3545;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
 
+.processor-container {
+  margin: 0;
+  padding: 0;
+}
 
 
 
@@ -90,7 +103,7 @@
 
   .auth-left {
     flex: 1;
-    background-color: #4a90e2;
+    background-color: #5159a3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -415,9 +428,7 @@
      Process Section
      ========================= */
 
-
 .processor-container {
-  font-family: Arial, sans-serif;
   width: 100%;
   height: 100vh;
   margin: 0;
@@ -426,22 +437,23 @@
   flex-direction: column;
 }
 
-
 .main-content {
   display: flex;
   justify-content: space-between;
-  gap: 0;
   flex: 1;
   padding: 20px;
   height: calc(100% - 60px); /* Adjust for header height */
+  gap: 10px;
 }
 
 .image-box {
-  border: 2px solid #000;
   padding: 10px;
   width: 49.5%; /* Slight adjustment to fit within divider */
   height: 100%;
   box-sizing: border-box;
+  background: #fdfdfd;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .image-box-header {
@@ -451,27 +463,35 @@
   margin-bottom: 10px;
 }
 
+.fa-solid.fa-xmark {
+  cursor: pointer;
+}
+
 .image-box-header h3 {
   margin: 0;
+  font-size: 20px;
+  color: #000000; /* fresh header color */
 }
 
 .image-content {
   display: flex;
-  gap: 0;
+  flex-direction: row;
   height: 80%;
   max-height: 100%;
-  flex-direction: row; /* Ensure row direction */
+  gap: 5px; 
 }
 
 .image-area {
   flex: 0 0 70%;
   height: 100%;
-  border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  background-color: #f8f9fa; 
+  border-radius: 6px;
+  padding: 5px;
 }
 
 .image-placeholder {
@@ -486,16 +506,34 @@
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
+  border-radius: 4px;
 }
 
-.file-info {
-  flex: 0 0 30%;
-  margin: 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  overflow-y: auto;
-  box-sizing: border-box;
-  max-height: 100%;
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-table td {
+  padding: 6px 8px;
+  vertical-align: top;
+}
+
+.info-table td:first-child {
+  width: 45%;                /* consistent width */
+  font-weight: 600;
+  color: #5159a3;
+  white-space: nowrap;       /* prevents wrapping */
+}
+
+.info-table td:last-child {
+  color: black; /* value color */
+  word-break: break-word; /* handles long filenames */
+}
+
+
+.file-info p {
+  margin: 6px 0;
 }
 
 .crop-buttons {
@@ -509,8 +547,17 @@
 }
 
 .crop-btn {
-  padding: 5px 15px;
+  padding: 5px 10px;
   cursor: pointer;
+  background-color: #5159a3;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.crop-btn:hover {
+  background-color: #3541ab;
 }
 
 .action-buttons {
@@ -520,13 +567,22 @@
 }
 
 .btn {
-  padding: 5px 15px;
+  padding: 6px 15px;
   cursor: pointer;
+  background-color: #5159a3; 
+  border-radius: 6px;
+  color: #ffffff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #2f3887; /* hover effect */
 }
 
 .divider {
-  width: 2px;
-  background-color: #000;
+  width: 1px;
+  background-color: #ccc;
   margin: 0 10px;
 }
 
@@ -545,8 +601,9 @@
 .popup {
   background: #fff;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 6px;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .popup-actions {
