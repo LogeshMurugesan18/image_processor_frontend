@@ -75,17 +75,19 @@ export class HomeComponent {
     this.http.post('http://localhost:3000/api/auth/upload-image', formData, { withCredentials: true })
       .subscribe({
         next: (res: any) => {
+          console.log('Upload response:', res); // Debug the response
           this.toastr.success('File uploaded successfully!');
           this.showControls = true;
 
-          // Pass dimensions as well
+          // Pass dimensions and imageId as well
           this.router.navigate(['/process'], {
             state: { 
               previewUrl: this.previewUrl,
               uploadedFileName: this.selectedFile?.name,
               uploadedFileSize: this.formatBytes(this.selectedFile!.size),
               uploadedImageWidth: this.uploadedWidth,
-              uploadedImageHeight: this.uploadedHeight
+              uploadedImageHeight: this.uploadedHeight,
+              imageId: res.imageId // Ensure this is present
             }
           });
 
