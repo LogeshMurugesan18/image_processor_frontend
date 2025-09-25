@@ -1,32 +1,40 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
-  imports: [FormsModule,CommonModule],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  isLoggedIn:boolean=false;
+  // expose the BehaviorSubject as an observable
+  isLoggedIn$;
 
-  constructor(public router:Router, private auth:AuthService){}
-
-ngOnInit() {
-  this.auth.checkAuth().subscribe(); //to check state sync on refresh
-    this.auth.isLoggedIn$.subscribe(status => {
-      this.isLoggedIn = status;
-    });
+  constructor(
+    private router: Router,
+    private auth: AuthService
+  ) {
+    this.isLoggedIn$=this.auth.isLoggedIn$
   }
 
-  navigateToLogin(){
+  ngOnInit() {
+    // keep auth state in sync on refresh
+    this.auth.checkAuth().subscribe();
+     this.isLoggedIn$.subscribe(val => {
+    console.log('👀 Header sees isLoggedIn$ =', val);
+  });
+  }
+
+  navigateToLogin() {
     this.router.navigate(['/login']);
   }
-  logout(){
-     this.auth.logout().subscribe(() => {
+
+  logout() {
+    this.auth.logout().subscribe(() => {
       this.router.navigate(['/']);
     });
   }

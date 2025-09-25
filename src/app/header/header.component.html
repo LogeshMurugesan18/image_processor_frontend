@@ -7,20 +7,19 @@
     <h1 class="title">Image Processor</h1>
   </div>
 
-  <!-- Show login if not logged in -->
-  <a 
-    *ngIf="!isLoggedIn" 
-    class="auth-btn" 
-    (click)="navigateToLogin()">
-    Login
-  </a>
+<!-- Show login if not logged in -->
+<a 
+  *ngIf="!(isLoggedIn$ | async)" 
+  class="auth-btn" 
+  (click)="navigateToLogin()">
+  Login
+</a>
 
-  <!-- Show logout if logged in -->
-  <!-- <button 
-    *ngIf="isLoggedIn" 
-    class="auth-btn logout" 
-    (click)="logout()">
-    Logout
-  </button> -->
-  <i class="fa-solid fa-right-from-bracket" *ngIf="isLoggedIn" (click)="logout()"></i>
+<!-- Show logout if logged in -->
+<i 
+  class="fa-solid fa-right-from-bracket" 
+  *ngIf="isLoggedIn$ | async" 
+  (click)="logout()">
+</i>
+
 </header>

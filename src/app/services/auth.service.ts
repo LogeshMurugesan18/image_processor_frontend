@@ -14,6 +14,7 @@ private user$ = new BehaviorSubject<any>(null);
 login(email:string,password:string):Observable<any>{
   return this.http.post('http://localhost:3000/api/auth/login',{email,password},{withCredentials:true})
   .pipe(tap(()=>{
+    console.log('🔐 Login success → updating loggedIn$ to true');
     this.loggedIn$.next(true);
     this.user$.next({email});
   }));
@@ -30,15 +31,17 @@ login(email:string,password:string):Observable<any>{
   }
 
 // Check Auth on reload
-  checkAuth(): Observable<any> {
-    return this.http.get('http://localhost:3000/api/auth/check-auth', { withCredentials: true })
-      .pipe(
-        tap((res: any) => {
-          this.loggedIn$.next(res.isAuthenticated);
-          this.user$.next(res.isAuthenticated ? res.user : null);
-        })
-      );
-  }
+checkAuth(): Observable<any> {
+  return this.http.get('http://localhost:3000/api/auth/check-auth', { withCredentials: true })
+    .pipe(
+      tap((res: any) => {
+        const isAuth = res?.isAuthenticated === true;
+        this.loggedIn$.next(isAuth);
+        this.user$.next(isAuth ? res.user : null);
+      })
+    );
+}
+
 
 
   // Observables for components

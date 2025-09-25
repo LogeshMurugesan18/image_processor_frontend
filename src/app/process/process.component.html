@@ -52,11 +52,11 @@
 </div>
       </div>
       <!-- Rotate / Upscale / Crop buttons -->
-      <div class="action-buttons">
-        <button class="btn" (click)="openRotatePopup()">Rotate</button>
-        <button class="btn" (click)="openUpscalePopup()">Upscale</button>
-        <button class="btn" (click)="startCrop()">Crop</button>
-      </div>
+      <div class="action-buttons upload-actions">
+  <button class="btn" (click)="openRotatePopup()">Rotate</button>
+  <button class="btn" (click)="openUpscalePopup()">Upscale</button>
+  <button class="btn" (click)="startCrop()">Crop</button>
+</div>
     </section>
 
     <!-- Divider -->
@@ -98,8 +98,10 @@
           </div>
         </div>
       </div>
-<div class="action-buttons">
-  <button class="btn" (click)="downloadImage()">Save</button>
+<div class="action-buttons processed-actions">
+  <div class="left-actions">
+    <button class="btn" (click)="downloadImage()">Save</button>
+  </div>
   <i class="fa-solid fa-download download-icon" (click)="downloadImage()"></i>
 </div>
 
