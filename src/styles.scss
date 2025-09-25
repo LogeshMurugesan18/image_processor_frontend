@@ -741,14 +741,14 @@ color: red;
     margin-top: 1rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    background: #007bff;
+    background: #5159a3;
     color: white;
     border: none;
     border-radius: 4px;
     font-size: 0.9rem;
 
     &:hover {
-      background: #0056b3;
+      background: #3742ac;
     }
   }
 }
@@ -785,7 +785,7 @@ color: red;
 
       .fa-trash {
         font-size: 1.2rem;
-        color: red;
+        color: rgb(62, 52, 52);
         margin-left: 4px; /* 4px gap */
         cursor: pointer;
         transition: color 0.2s;
@@ -815,7 +815,7 @@ color: red;
     .upload-btn {
       padding: 8px 16px;
       border: none;
-      background: #007bff;
+      background: #5159a3;
       color: #fff;
       border-radius: 6px;
       cursor: pointer;
@@ -823,7 +823,7 @@ color: red;
       transition: background 0.2s;
 
       &:hover {
-        background: #0056b3;
+        background: #4a58d7;
       }
     }
   }
