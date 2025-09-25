@@ -1,24 +1,70 @@
 <app-header></app-header>
 <div class="home-container">
-
-  <!-- Previously processed images -->
   <section class="gallery">
-    <!-- <div class="image-card" *ngFor="let img of processedImages">
-      <img [src]="img.url" alt="Processed Image">
-    </div> -->
-    <div class="image-card">Previously Processed Images</div>
+    <h3>Previously Processed Images</h3>
+
+    <div class="gallery-grid">
+      <!-- Existing processed images -->
+      <div
+        class="image-card"
+        *ngFor="let img of processedImages; let i = index"
+        [class.hidden]="!showAll && i >= 3"
+      >
+        <div class="image-wrapper">
+          <img [src]="img.url" alt="Processed Image" />
+        </div>
+        <div class="card-details">
+          <p><strong>Size:</strong> {{ formatBytes(img.size) }}</p>
+          <p><strong>Uploaded:</strong> {{ img.uploadedOn | date:'short' }}</p>
+        </div>
+      </div>
+
+      <!-- Plus card for uploading new image -->
+      <div class="image-card add-card" (click)="triggerFileInput()">
+        <i class="fa-solid fa-plus"></i>
+      </div>
+    </div>
+
+    <!-- Show More / Show Less -->
+    <button
+      *ngIf="processedImages.length > 4"
+      class="show-more-btn"
+      (click)="toggleShowAll()"
+    >
+      {{ showAll ? 'Show Less' : 'Show More' }}
+    </button>
+
+    <!-- Hidden file input -->
+    <input
+      type="file"
+      #fileInput
+      accept="image/*"
+      style="display:none"
+      (change)="onFileSelected($event)"
+    />
   </section>
 
   <!-- Upload section -->
-  <section class="upload-section">
-    <p class="upload-label">Upload Here</p>
-    <div class="upload-box">
-      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
-      <button class="btn" (click)="clearSelection()">Clear</button>
-      <button class="btn" (click)="uploadFile()">Proceed</button>
+<section class="upload-section">
+  <p class="upload-label">Upload Here</p>
+
+  <div class="upload-box">
+    <div class="file-input-wrapper">
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+      />
+      <i class="fa-solid fa-trash" (click)="clearSelection()"></i>
     </div>
-  </section>
+
+    <!-- Preview selected image -->
+    <div class="preview-container" *ngIf="previewUrl">
+      <img [src]="previewUrl" alt="Selected Image" />
+    </div>
+
+    <button class="upload-btn" (click)="uploadFile()">Proceed</button>
+  </div>
+</section>
+
 </div>
-
-
-

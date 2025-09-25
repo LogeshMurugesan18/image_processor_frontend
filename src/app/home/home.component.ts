@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { ToastrService } from 'ngx-toastr';
+import { Element } from '@angular/compiler';
 
 @Component({
   selector: 'app-home',
@@ -14,11 +15,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   processedImages: any[] = [];
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   showControls = false;
+  showAll:boolean =false;
 
   // Store dimensions after upload
   uploadedWidth: number = 0;
@@ -29,18 +31,28 @@ export class HomeComponent {
   ngOnInit(): void {
     this.fetchProcessedImages();
   }
+  // Toggle Show More / Show Less
+  toggleShowAll() {
+    this.showAll = !this.showAll;
+  }
+
+  // Trigger the hidden file input
+  triggerFileInput() {
+    this.fileInput.nativeElement.click();
+  }
 
   fetchProcessedImages() {
     this.http.get<any[]>('http://localhost:3000/api/auth/user-images', { withCredentials: true })
-      .subscribe({
-        next: (res) => {
-          this.processedImages = res;
-        },
-        error: (err) => {
-          console.error('Error fetching images:', err);
-        }
-      });
+    .subscribe({
+      next: (res) => {
+        this.processedImages = res;
+      },
+      error: (err) => {
+        console.error('Error fetching images:', err);
+      }
+    });
   }
+  
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -120,7 +132,7 @@ export class HomeComponent {
   formatBytes(bytes: number): string {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ['KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
